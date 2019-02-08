@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>reToothbrush - When did you last change your toothbrush?</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; child-src 'none'; connect-src https:;">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="styles.css">
+<link href="manifest.json" rel="manifest">
+</head>
+<body>
+
+<div class="wrap">
+	
+	<header role="banner">
+		<h1 class="large hero--font">reTooth&shy;brush!</h1>
+		<p class="highlight" id="tagline">When did you last change your toothbrush?</p>
+	</header>
+	
+	<main role="main">
+		
+		<section>
+			<h2 id="rt-heading" class="hidden">Toothbrush Change Information</h2>
+			<noscript><p>App requires javascript to function.</p></noscript>
+			
+			<div id="rt-info" class="panel" aria-labelledby="rt-heading" aria-live="polite" aria-atomic="true" role="region">
+				
+				<div class="timer__value--start">
+					<h3 id="rth-startday">Start Date</h3>
+					<time id="dayStart" class="hero--font" aria-labelledby="rth-startday">Not set</time>
+				</div>
+				<div class="timer__value--days">
+					<h3 id="rth-remainday">Until Brush Change</h3>
+					<time class="large hero--font" id="dayRemaining" aria-labelledby="rth-remainday" datetime="P0D">Not set</time>
+				</div>
+				<div class="timer__value--end">
+					<h3 id="rth-endday">End Date</h3>
+					<time id="dayEnd" class="hero--font" aria-labelledby="rth-endday">Not set</time>
+				</div>
+				
+			</div>
+		
+		<button class="hero--font" role="button" value="#" id="brushchange" aria-controls="rt-info" type="button">Brush Changed</button>
+		</section>
+	
+	</main>
+	
+	<footer role="contentinfo">
+		<p class="highlight">
+			<i>Date formated MM/DD/YY</i><br />
+			reToothbrush app by <a href="https://github.com/plfstr/">Paul Foster</a>
+		</p>
+	</footer>
+
+</div>
+<script src="moment.min.js"></script>
+<script src="store.modern.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "reToothbrush - When did I last change my toothbrush?",
+  "short_name" : "reToothbrush",
+  "icons": [
+    {
+      "src": "webclip-128x128.png",
+      "sizes": "128",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone",
+  "theme_color": "#4DDEB6",
+  "background_color": "#4d6bde"
+}

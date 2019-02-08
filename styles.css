@@ -1,0 +1,247 @@
+/* Colour Vars */
+:root {
+	--rtb-times: #1f5ea5;/* #2366b1; */
+	--rtb-appbg: #2364ad;
+	--rtb-light: #8cf9da;
+	--rtb-middle: #59eac3;/* #4DDEB6; */
+	--rtb-dark: #2edaac;/* #30d8ac; *//* #16c598; */
+	--rtb-radius: 0em 1.25rem 0 1.25rem;
+}
+
+@-ms-viewport {
+	width: device-width;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+	}
+
+body {
+	display: flex;
+	place-content: center; 
+	place-items: center;
+	padding: .75rem;
+	font: normal 100%/1.5 system-ui, -apple-system, "Segoe UI", Thonburi, "Lucida Grande", Arial, sans-serif;
+	text-align: center;
+	color: #fff;
+	background-color: #2364ad;
+	background-color: var(--rtb-appbg, #2364ad);
+}
+
+header {overflow: auto}
+
+.hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	border: 0;
+	padding: 0;
+	white-space: nowrap;
+	clip-path: inset(100%);
+	clip: rect(0 0 0 0);
+	overflow: hidden;
+}
+
+.wrap {
+	flex: 1 1 auto;
+	max-width: 480px;
+}
+
+.highlight {
+	color: #87f3d1;
+}
+
+.large {font-size: 3.75rem}
+
+h3 {
+	font-size: 1.125rem;
+	line-height: 1.3333;
+	font-weight: normal;
+	margin: -.25rem auto 0rem;
+}
+
+h1, p, button {
+	margin: 0 auto 1.5rem;
+}
+
+h1 {
+	padding-right: .25rem;
+	line-height: 1;
+	margin-bottom: 1rem;
+}
+
+.hero--font {
+	font-weight: bold;
+}
+
+a {
+	color: currentColor;
+	text-decoration-skip: ink;
+	text-decoration-skip-ink: auto;
+}
+	
+time {
+	display: block;
+	font-size: 2.5rem;
+	margin: -.5rem auto;
+}
+
+/* 
+* Date Elements 
+*/
+.panel {
+	position: relative;
+	margin: 2rem auto;
+}
+
+[class^='timer__value--'] {
+	position: relative;
+	padding: 1.25rem 0;
+	border: 0;
+	margin-top: -1.25rem;
+	color: #2364ad;
+	color: var(--rtb-times);
+	border-radius: 0em 1.25rem 0 1.25rem;
+	border-radius: var(--rtb-radius);
+	contain: style;
+}
+
+.timer__value--start {
+	padding-bottom: 1.75rem;
+}
+
+.timer__value--days time {
+    margin: -1rem auto -.5rem;
+}
+
+.timer__value--end {
+	border-bottom-right-radius: 1.5rem;
+	box-shadow: 0 .5rem rgba(0,0,0,0.2);
+}
+
+[class^='timer__value--']:before,
+[class^='timer__value--']:after {
+	position: absolute;
+	z-index: 51;
+	content: "";
+	display: block;
+	width: 2.25rem;
+	height: 2.25rem;
+	top: 0;
+	left: 0;
+	-webkit-transform: translate(0, -2.25rem);
+	transform: translate(0, -2.25rem);
+}
+
+[class^='timer__value--']:after {
+	width: 2.5em;
+	left: 1px;
+	z-index: 52;
+	border-bottom-left-radius: 3rem;
+}
+
+/*
+* Paste Colors Details
+* :before - inherited from parent
+* :after - mask colour of previous element to create the swoop
+* element - the color you expect
+*/
+.timer__value--start {
+	background-color: #8cf9da;
+	background-color: var(--rtb-light);
+}
+.timer__value--start:after {
+	background-color: #2364ad;
+	background-color: var(--rtb-appbg);
+}
+
+.timer__value--days {
+	background-color: #4DDEB6;
+	background-color: var(--rtb-middle);
+}
+.timer__value--days:after {
+	background-color: #8cf9da;
+	background-color: var(--rtb-light);
+}
+
+.timer__value--end {
+	background-color: #16c598;
+	background-color: var(--rtb-dark);
+}
+.timer__value--end:after {
+	background-color: #4DDEB6;
+	background-color: var(--rtb-middle);
+}
+
+[class^='timer__value--']:before {
+	background-color: inherit;
+}
+
+
+button {
+	font-size: 2em;
+	line-height: 2;
+	width: 100%;
+	cursor: pointer;
+	border-radius: .5rem;
+	color: #fff;
+	background: none;
+	border: 3px solid #fff;
+	border-radius: 1.5rem;
+	box-shadow: inset 0 -.5rem rgba(0,0,0,0.2);
+}
+
+@media only screen and (min-width:420px) {
+	button {
+		max-width: 80%;
+	}
+}
+
+button:hover, 
+button:active,
+button:focus {
+	color: #2364ad;
+	border-color: #4DDEB6;
+	background-color: #4DDEB6;
+	}
+
+button[disabled] {
+	color: #1e528d !important;
+	border-color: #1e528d !important;
+}
+
+footer {
+	letter-spacing: 0.025rem;
+}
+
+@media only screen and (orientation: landscape) {
+	time {
+		display: inline-block;
+		padding: .5rem;
+	}
+}
+
+/* Animated FadeIn Effect */
+/* .has-updated time, */
+time {
+	animation: fadedates .5s ease-in .1s forwards;
+}
+
+@keyframes fadedates {
+	from {
+		opacity: 0;
+	} 
+	to {
+		opacity: 1;
+	}
+}
