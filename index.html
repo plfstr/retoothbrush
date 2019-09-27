@@ -9,6 +9,11 @@
 <link href="manifest.json" rel="manifest">
 </head>
 <body>
+<svg id="corner" xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
+	<symbol id="timer-corner">
+		<path d="M0 0v100h100A100 100 0 0 1 0 0z"/>
+	</symbol>
+</svg>
 
 <div class="wrap">
 	
@@ -26,14 +31,23 @@
 			<div id="rt-info" class="panel" aria-labelledby="rt-heading" aria-live="polite" aria-atomic="true" role="region">
 				
 				<div class="timer__value--start">
+					<svg class="timer__corner" viewBox="0 0 100 100" role="presentation" aria-hidden="true">
+						<use href="#timer-corner"></use>
+					</svg>
 					<h3 id="rth-startday">Start Date</h3>
 					<time id="dayStart" class="hero--font" aria-labelledby="rth-startday">Not set</time>
 				</div>
 				<div class="timer__value--days">
+					<svg class="timer__corner" viewBox="0 0 100 100" role="presentation" aria-hidden="true">
+						<use href="#timer-corner"></use>
+					</svg>
 					<h3 id="rth-remainday">Until Brush Change</h3>
 					<time class="large hero--font" id="dayRemaining" aria-labelledby="rth-remainday" datetime="P0D">Not set</time>
 				</div>
 				<div class="timer__value--end">
+					<svg class="timer__corner" viewBox="0 0 100 100" role="presentation" aria-hidden="true">
+						<use href="#timer-corner"></use>
+					</svg>
 					<h3 id="rth-endday">End Date</h3>
 					<time id="dayEnd" class="hero--font" aria-labelledby="rth-endday">Not set</time>
 				</div>

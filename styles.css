@@ -5,7 +5,7 @@
 	--rtb-light: #8cf9da;
 	--rtb-middle: #59eac3;/* #4DDEB6; */
 	--rtb-dark: #2edaac;/* #30d8ac; *//* #16c598; */
-	--rtb-radius: 0em 1.25rem 0 1.25rem;
+	--rtb-radius: 2.25rem;
 }
 
 @-ms-viewport {
@@ -104,89 +104,41 @@ time {
 	margin: 2rem auto;
 }
 
+.timer__corner {
+	position: absolute;
+	width: 4.375rem;
+	height: 4.375rem;
+	z-index: 88;
+	left: 0;
+	transform: translate(0, calc(-78px + -1rem));
+}
+
 [class^='timer__value--'] {
 	position: relative;
-	padding: 1.25rem 0;
-	border: 0;
-	margin-top: -1.25rem;
-	color: #2364ad;
+	padding: 1.5rem 0;
+	margin-top: -1.5rem;
 	color: var(--rtb-times);
-	border-radius: 0em 1.25rem 0 1.25rem;
-	border-radius: var(--rtb-radius);
-	contain: style;
+	border-top-right-radius: var(--rtb-radius, 1rem);
 }
 
 .timer__value--start {
-	padding-bottom: 1.75rem;
-}
-
-.timer__value--days time {
-    margin: -1rem auto -.5rem;
-}
-
-.timer__value--end {
-	border-bottom-right-radius: 1.5rem;
-	box-shadow: 0 .5rem rgba(0,0,0,0.2);
-}
-
-[class^='timer__value--']:before,
-[class^='timer__value--']:after {
-	position: absolute;
-	z-index: 51;
-	content: "";
-	display: block;
-	width: 2.25rem;
-	height: 2.25rem;
-	top: 0;
-	left: 0;
-	-webkit-transform: translate(0, -2.25rem);
-	transform: translate(0, -2.25rem);
-}
-
-[class^='timer__value--']:after {
-	width: 2.5em;
-	left: 1px;
-	z-index: 52;
-	border-bottom-left-radius: 3rem;
-}
-
-/*
-* Paste Colors Details
-* :before - inherited from parent
-* :after - mask colour of previous element to create the swoop
-* element - the color you expect
-*/
-.timer__value--start {
-	background-color: #8cf9da;
+	fill: var(--rtb-light);
 	background-color: var(--rtb-light);
-}
-.timer__value--start:after {
-	background-color: #2364ad;
-	background-color: var(--rtb-appbg);
 }
 
 .timer__value--days {
-	background-color: #4DDEB6;
+	fill: var(--rtb-middle);
 	background-color: var(--rtb-middle);
 }
-.timer__value--days:after {
-	background-color: #8cf9da;
-	background-color: var(--rtb-light);
-}
+
+.timer__value--days time {margin: -1rem auto -.5rem}
 
 .timer__value--end {
-	background-color: #16c598;
-	background-color: var(--rtb-dark);
+	fill: var(--rtb-dark);
+	background-color: var(--rtb-dark); 
+	border-bottom-right-radius: var(--rtb-radius, 1rem);
+	border-bottom-left-radius: 4.375rem;
 }
-.timer__value--end:after {
-	background-color: #4DDEB6;
-	background-color: var(--rtb-middle);
-}
-
-[class^='timer__value--']:before {
-	background-color: inherit;
-}
-
 
 button {
 	font-size: 2em;
