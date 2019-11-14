@@ -1,0 +1,7 @@
+{
+    "name": "retoothbrush",
+    "version": "1.0.0",
+    "dependencies": {
+        "moment": "2.x"
+    }
+}
