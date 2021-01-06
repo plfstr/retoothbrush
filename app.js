@@ -222,6 +222,20 @@ function brushSwap() {
 	}
 	
 	makeDates(dateBrushchange);
+	
+	if (hasScheduling) {
+		try {
+			cancelScheduledNotification()
+		} catch(error) {
+			console.warn(error)
+		}
+		try {
+			createScheduledNotification()
+		} catch(error) {
+			// Maybe warn there wont be a scheduled reminder...
+			console.warn(error)
+		}
+	}
 
 	// Trigger fade-in effect
 	document.body.classList.add('has-updated');
@@ -248,3 +262,28 @@ document.addEventListener('DOMContentLoaded', brushDate, supportsOnce? { once: t
 * Button Listener
 */
 document.querySelector('#brushchange').addEventListener('click', brushSwap, false);
+
+/*
+* Scheduled Notifications Test
+*/
+const hasScheduling = "showTrigger" in Notification.prototype;
+
+if (hasScheduling) {
+	const createScheduledNotification = async (tag, title, timestamp) => {
+		const registration = await navigator.serviceWorker.getRegistration();
+		registration.showNotification(title, {
+			tag: tag,
+			body: "Its time to swap your toothbrush!",
+			showTrigger: new TimestampTrigger(timestamp)
+		});
+	};
+
+	const cancelScheduledNotification = async (tag) => {
+		const registration = await navigator.serviceWorker.getRegistration();
+		const notifications = await registration.getNotifications({
+		  tag: tag,
+		  includeTriggered: true,
+		});
+		notifications.forEach((notification) => notification.close());
+	  };
+}
