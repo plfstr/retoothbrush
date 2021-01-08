@@ -248,3 +248,20 @@ document.addEventListener('DOMContentLoaded', brushDate, supportsOnce? { once: t
 * Button Listener
 */
 document.querySelector('#brushchange').addEventListener('click', brushSwap, false);
+
+if ("serviceWorker" in navigator) {
+	if (navigator.serviceWorker.controller) {
+	  console.log("Service Worker Registered");
+	} else {
+	  navigator.serviceWorker
+		.register("sw.js", {
+		  scope: "./"
+		})
+		.then(function (reg) {
+		  console.log('Service Worker Registered!');
+		})
+		.catch(function(error) {
+		  console.log('Registration failed with ' + error);
+		});
+	}
+  }
