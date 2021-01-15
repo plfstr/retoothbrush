@@ -225,12 +225,12 @@ function brushSwap() {
 	
 	if (hasScheduling) {
 		try {
-			cancelScheduledNotification()
+			cancelScheduledNotification('retoothbrush')
 		} catch(error) {
 			console.warn(error)
 		}
 		try {
-			createScheduledNotification()
+			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().add(90, 'days').format());
 		} catch(error) {
 			// Maybe warn there wont be a scheduled reminder...
 			console.warn(error)
