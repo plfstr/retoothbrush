@@ -283,6 +283,15 @@ var createScheduledNotification;
 var cancelScheduledNotification;
 
 if (hasScheduling) {
+
+	navigator.permissions.query({name:'notifications'}).then(function(result) {
+		if (result.state == 'granted') {
+			confirm('You will receive notification reminders');
+		} else {
+			confirm('You need to enable notifications to receive notification reminders');
+		}
+	});
+
 	createScheduledNotification = async (tag, title, timestamp) => {
 		console.log({tag, title, timestamp});
 		let scheduleDelay = 10 * 1000; // 10 seconds
