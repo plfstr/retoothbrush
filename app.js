@@ -289,6 +289,9 @@ if (hasScheduling) {
 			confirm('You will receive notification reminders');
 		} else {
 			confirm('You need to enable notifications to receive notification reminders');
+			Notification.requestPermission().then(function(result) {
+				console.log(result);
+			});
 		}
 	});
 
