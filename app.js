@@ -220,8 +220,17 @@ function brushSwap() {
 		}
 		store.set('dateSwapped', moment().format("YYYY-MM-DD") );
 	}
-	
+
 	makeDates(moment().format("YYYY-MM-DD"));
+	
+	if (hasScheduling) {
+		try {
+			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().valueOf());
+		} catch(error) {
+			console.warn(error);
+			confirm('Notification failed to schedule. You will not receive a reminder');
+		}
+	}
 
 	// Trigger fade-in effect
 	document.body.classList.add('has-updated');
@@ -265,3 +274,33 @@ if ("serviceWorker" in navigator) {
 		});
 	}
   }
+
+/*
+* Scheduled Notifications Test
+*/
+const hasScheduling = "showTrigger" in Notification.prototype;
+var createScheduledNotification;
+var cancelScheduledNotification;
+
+if (hasScheduling) {
+	createScheduledNotification = async (tag, title, timestamp) => {
+		console.log({tag, title, timestamp});
+		let scheduleDelay = 10 * 1000; // 10 seconds
+		const registration = await navigator.serviceWorker.getRegistration();
+		console.log(registration);
+		registration.showNotification(title, {
+			tag: tag,
+			body: "Its time to swap your toothbrush!",
+			showTrigger: new TimestampTrigger(timestamp + scheduleDelay)
+		});
+	};
+
+	cancelScheduledNotification = async (tag) => {
+		const registration = await navigator.serviceWorker.getRegistration();
+		const notifications = await registration.getNotifications({
+		  tag: tag,
+		  includeTriggered: true,
+		});
+		notifications.forEach((notification) => notification.close());
+	};
+}
