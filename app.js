@@ -221,7 +221,7 @@ function brushSwap() {
 		store.set('dateSwapped', moment().format("YYYY-MM-DD") );
 	}
 	
-	makeDates(dateBrushchange);
+	makeDates(moment().format("YYYY-MM-DD"));
 
 	// Trigger fade-in effect
 	document.body.classList.add('has-updated');
