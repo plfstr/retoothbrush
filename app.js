@@ -225,15 +225,10 @@ function brushSwap() {
 	
 	if (hasScheduling) {
 		try {
-			cancelScheduledNotification('retoothbrush')
+			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().valueOf());
 		} catch(error) {
-			console.warn(error)
-		}
-		try {
-			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().add(90, 'days').format());
-		} catch(error) {
-			// Maybe warn there wont be a scheduled reminder...
-			console.warn(error)
+			console.warn(error);
+			confirm('Notification failed to schedule. You will not receive a reminder');
 		}
 	}
 
@@ -267,23 +262,28 @@ document.querySelector('#brushchange').addEventListener('click', brushSwap, fals
 * Scheduled Notifications Test
 */
 const hasScheduling = "showTrigger" in Notification.prototype;
+var createScheduledNotification;
+var cancelScheduledNotification;
 
 if (hasScheduling) {
-	const createScheduledNotification = async (tag, title, timestamp) => {
+	createScheduledNotification = async (tag, title, timestamp) => {
+		console.log({tag, title, timestamp});
+		let scheduleDelay = 10 * 1000; // 10 seconds
 		const registration = await navigator.serviceWorker.getRegistration();
+		console.log(registration);
 		registration.showNotification(title, {
 			tag: tag,
 			body: "Its time to swap your toothbrush!",
-			showTrigger: new TimestampTrigger(timestamp)
+			showTrigger: new TimestampTrigger(timestamp + scheduleDelay)
 		});
 	};
 
-	const cancelScheduledNotification = async (tag) => {
+	cancelScheduledNotification = async (tag) => {
 		const registration = await navigator.serviceWorker.getRegistration();
 		const notifications = await registration.getNotifications({
 		  tag: tag,
 		  includeTriggered: true,
 		});
 		notifications.forEach((notification) => notification.close());
-	  };
+	};
 }
