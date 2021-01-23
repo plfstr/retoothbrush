@@ -212,16 +212,16 @@ function brushDate() {
 */
 function brushSwap() {
 
-	console.warn('Brushchange!');	
+	console.warn('Brushchange!');
+	let datenow = moment().format("YYYY-MM-DD");
 	
-	if ( dateValid( moment().format("YYYY-MM-DD") ) ) {
+	if ( dateValid( datenow ) ) {
 		if (storedDate) {
 			confirm('Brush Changed. Create new date?');
 		}
-		store.set('dateSwapped', moment().format("YYYY-MM-DD") );
+		makeDates(datenow);
+		store.set('dateSwapped', datenow);
 	}
-
-	makeDates(moment().format("YYYY-MM-DD"));
 	
 	if (hasScheduling) {
 		try {
