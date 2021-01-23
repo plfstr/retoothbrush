@@ -1,4 +1,4 @@
-'use strict';
+import { format, isValid, formatISO, add, formatDistanceToNowStrict } from './date-fns/index.js';
 
 /*
 * @function userMsg - Provides feedback to user
@@ -27,7 +27,7 @@ if ( window.isSecureContext === false ) {
 }
 	
 /*
-* Set Moment locale language...
+* Set locale language...
 */
 var browLang = (() => {
 	return window.navigator.languages || window.navigator.language;
@@ -80,7 +80,7 @@ else {
 *	@return {boolean}
 */
 function dateValid( dateChecked ) {
-	return moment( dateChecked, "YYYY-MM-DD", true ).isValid();
+	return isValid(new Date(dateChecked));
 }
 
 
@@ -120,7 +120,7 @@ function dayPlural(daysRemaining) {
 function dateUtc( dateIn ){
 	
 	if ( dateValid(dateIn) ) {
-		return moment(dateIn).utc().format();
+		return formatISO(new Date(dateIn));
 	}
 	
 }
@@ -130,11 +130,11 @@ function makeDates( dateBrushchange = false) {
 
 	if ( dateValid(dateBrushchange) ) {
 		
-		let	dateStart = moment(dateBrushchange, "YYYY-MM-DD");
+		let	dateStart = new Date(dateBrushchange);
 		
-		let	dateEnd = moment(dateStart).add(90, 'days');
+		let	dateEnd = add(new Date(dateStart), {days: 90});
 		
-		let	dateDayremain = Math.max(0, dateEnd.diff(moment(), 'days') );
+		let	dateDayremain = formatDistanceToNowStrict(dateEnd, {unit: 'day'});
 		
 		let brushDates = Array.from([dateStart, dateDayremain, dateEnd]);
 		
@@ -175,15 +175,15 @@ function dateFill(brushDates) {
 		let	domDayend = document.querySelector('#dayEnd');		
 		
 		// Date Start		
-		domDaystart.textContent = brushDates[0].format( dateFormat() );
+		domDaystart.textContent = format(brushDates[0], 'dd/MM/yyyy');
 		domDaystart.setAttribute('datetime', `${dateUtc(brushDates[0])}`);
 
 		// Days Remain
-		domDayremain.textContent = `${ dayPlural(brushDates[1]) }`;
+		domDayremain.textContent = `${ brushDates[1] }`;
 		domDayremain.setAttribute('datetime', `P ${brushDates[1]} D`);
 		
 		// Date End
-		domDayend.textContent = brushDates[2].format( dateFormat() );
+		domDayend.textContent = format(brushDates[2], 'dd/MM/yyyy');
 		domDayend.setAttribute('datetime', `${dateUtc(brushDates[2])}`);
 		
 }
@@ -214,18 +214,18 @@ function brushSwap() {
 
 	console.warn('Brushchange!');	
 	
-	if ( dateValid( moment().format("YYYY-MM-DD") ) ) {
+	if ( dateValid( format(new Date(), 'yyyy-MM-dd') ) ) {
 		if (storedDate) {
 			confirm('Brush Changed. Create new date?');
 		}
-		store.set('dateSwapped', moment().format("YYYY-MM-DD") );
+		store.set('dateSwapped', format(new Date(), 'yyyy-MM-dd') );
 	}
 
-	makeDates(moment().format("YYYY-MM-DD"));
+	makeDates(format(new Date(), 'yyyy-MM-dd'));
 	
 	if (hasScheduling) {
 		try {
-			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().valueOf());
+			createScheduledNotification('retoothbrush', 'ReToothbrush', format(new Date()));
 		} catch(error) {
 			console.warn(error);
 			confirm('Notification failed to schedule. You will not receive a reminder');
@@ -275,6 +275,8 @@ if ("serviceWorker" in navigator) {
 	}
   }
 
+console.log(new Date())
+
 /*
 * Scheduled Notifications Test
 */
@@ -297,7 +299,7 @@ if (hasScheduling) {
 
 	createScheduledNotification = async (tag, title, timestamp) => {
 		console.log({tag, title, timestamp});
-		let scheduleDelay = moment().add(1, 'days').valueOf(); // 1 day
+		let scheduleDelay = add(new Date(), {days: 1}); // 1 day
 		const registration = await navigator.serviceWorker.getRegistration();
 		console.log(registration);
 		registration.showNotification(title, {

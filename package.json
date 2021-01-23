@@ -2,6 +2,6 @@
     "name": "retoothbrush",
     "version": "1.0.0",
     "dependencies": {
-        "moment": "2.x"
+        "date-fns": "2.16.1"
     }
 }
