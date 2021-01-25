@@ -198,6 +198,7 @@ function brushDate() {
 	
 	if ( storedDate ) {
 		makeDates(storedDate);
+		requestPersistance();
 	} else {
 		return;
 	}
@@ -232,8 +233,29 @@ function brushSwap() {
 		}
 	}
 
+	requestPersistance();
+
 	// Trigger fade-in effect
 	document.body.classList.add('has-updated');
+}
+
+/*
+* Request storage persists
+* @function {null} requestPersistance
+* @returns persistent
+*/
+function requestPersistance() {
+	if (navigator.storage && navigator.storage.persisted) {
+		navigator.storage.persisted().then(function(persisted) {
+			if (!persisted) {
+				navigator.storage.persist().then(function(persist) {
+					if (!persist) {
+						userMsg('Please allow ‘Persistant Storage’ in your browser to ensure your data is kept');
+					}
+				});
+			}
+		});
+	}
 }
 
 
