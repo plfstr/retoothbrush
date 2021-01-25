@@ -50,7 +50,7 @@ let localesCheck = (() => {
 */
 function langChange() {
 	if ( confirm('Browser language has changed. Reload with new language preferences?') ) {
-		console.warn('brushDates updated, reloaded?');
+		console.warn('datechanged updated, reloaded?');
 	}
 }
 
@@ -131,8 +131,8 @@ function dateUtc( dateIn ){
 */
 class makeDates {
 
-	constructor (dateBrushchange) {
-		this.date = moment(dateBrushchange, "YYYY-MM-DD");
+	constructor (datechanged) {
+		this.date = moment(datechanged, "YYYY-MM-DD");
 	}
 
 	get dateStart() {
@@ -176,13 +176,13 @@ function dateFormat() {
 /*
 * Add dates to DOM
 * @function dateFill
-* @param {array} brushDates - Passes array of start, days remaining, end date
+* @param {array} datechanged - Passes array of start, days remaining, end date
 */
-function dateFill(brushDates) {
+function dateFill(datechanged) {
 
-	if ( dateValid(brushDates) ) {
+	if ( dateValid(datechanged) ) {
 		
-		let {datestart, dateremain, dateend} = new makeDates(brushDates).brushDates;
+		let {datestart, dateremain, dateend} = new makeDates(datechanged).brushDates;
 		
 		// Vars
 		let domDaystart = document.querySelector('#dayStart');
