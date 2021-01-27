@@ -1,4 +1,4 @@
-import { format, isValid, formatISO, add, formatDistanceToNowStrict } from './date-fns/index.js';
+import { format, isValid, formatISO, add, formatDistanceToNowStrict } from 'https://unpkg.com/date-fns?module';
 
 /*
 * @function userMsg - Provides feedback to user
