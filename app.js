@@ -226,6 +226,7 @@ function brushSwap() {
 	if (hasScheduling) {
 		try {
 			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().valueOf());
+			document.querySelector('i').textContent = moment().add(1, 'days').valueOf();
 		} catch(error) {
 			console.warn(error);
 			confirm('Notification failed to schedule. You will not receive a reminder');
@@ -297,13 +298,13 @@ if (hasScheduling) {
 
 	createScheduledNotification = async (tag, title, timestamp) => {
 		console.log({tag, title, timestamp});
-		let scheduleDelay = moment().add(1, 'days').valueOf(); // 1 day
+		let timedelay = 1000 * 60 * 60 * 24;
 		const registration = await navigator.serviceWorker.getRegistration();
 		console.log(registration);
 		registration.showNotification(title, {
 			tag: tag,
 			body: "Its time to swap your toothbrush!",
-			showTrigger: new TimestampTrigger(timestamp + scheduleDelay)
+			showTrigger: new TimestampTrigger(timestamp + timedelay)
 		});
 	};
 
