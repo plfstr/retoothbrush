@@ -75,6 +75,13 @@ else {
 
 
 /*
+* @var storedDatepast - Checks if storedDate is in the past
+* @returns {boolean}
+*/
+const storedDatepast = moment(storedDate).add(90, 'days').isSameOrBefore(moment(), 'day');
+
+
+/*
 *	@function dateChecked - Checks date value passed is valid date
 *	@param {string} dateChecked
 *	@return {boolean}
@@ -191,13 +198,18 @@ function dateFill(brushDates) {
 
 /*
 * Get stored date
-* @function brushDate
+* @function brushDate - pass storedDate to makeDates + trigger app badging if stored value is in past
 * @callback {makeDates}
 */
 function brushDate() {
 	
 	if ( storedDate ) {
 		makeDates(storedDate);
+		if ( navigator.setAppBadge && storedDatepast ) {
+			navigator.setAppBadge().catch((error) => {
+				console.error(error);
+			});
+		}
 	} else {
 		return;
 	}
@@ -222,6 +234,12 @@ function brushSwap() {
 	}
 
 	makeDates(moment().format("YYYY-MM-DD"));
+
+	if (navigator.clearAppBadge) {
+		navigator.clearAppBadge().catch((error) => {
+			console.error(error);
+		});
+	}
 	
 	if (hasScheduling) {
 		try {
