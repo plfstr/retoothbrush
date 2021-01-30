@@ -135,22 +135,22 @@ class makeDates {
 		this.date = moment(datechanged, "YYYY-MM-DD");
 	}
 
-	get dateStart() {
+	_dateStart() {
 		return this.date;
 	}
 
-	get dateEnd() {
+	_dateEnd() {
 		return moment(this.date).add(90, 'days');
 	}
 	
-	get dateDayremain() {
-		return Math.max(0, this.dateEnd.diff(moment(), 'days') );
+	_dateDayremain() {
+		return Math.max(0, this._dateEnd().diff(moment(), 'days') );
 	}
 	
 	get brushDates() {
-		return {datestart: this.dateStart, dateremain: this.dateDayremain, dateend: this.dateEnd}
+		return {datestart: this._dateStart(), dateremain: this._dateDayremain(), dateend: this._dateEnd()}
 	}
-
+	
 }
 
 
