@@ -190,7 +190,7 @@ function dateFill(datechanged) {
 		let	domDayend = document.querySelector('#dayEnd');		
 		
 		// Date Start		
-		domDaystart.textContent = datestart.format( dateFormat() );
+		domDaystart.textContent = datestart.format('DD/MM/YYYY');
 		domDaystart.setAttribute('datetime', `${dateUtc(datestart)}`);
 
 		// Days Remain
@@ -198,7 +198,7 @@ function dateFill(datechanged) {
 		domDayremain.setAttribute('datetime', `P ${dateremain} D`);
 		
 		// Date End
-		domDayend.textContent = dateend.format( dateFormat() );
+		domDayend.textContent = dateend.format('DD/MM/YYYY');
 		domDayend.setAttribute('datetime', `${dateUtc(dateend)}`);
 	
 	}
