@@ -50,7 +50,7 @@ let localesCheck = (() => {
 */
 function langChange() {
 	if ( confirm('Browser language has changed. Reload with new language preferences?') ) {
-		console.warn('brushDates updated, reloaded?');
+		console.warn('datechanged updated, reloaded?');
 	}
 }
 
@@ -126,20 +126,31 @@ function dateUtc( dateIn ){
 }
 
 
-function makeDates( dateBrushchange = false) {
+/*
+* @class makeDates
+*/
+class makeDates {
 
-	if ( dateValid(dateBrushchange) ) {
-		
-		let	dateStart = moment(dateBrushchange, "YYYY-MM-DD");
-		
-		let	dateEnd = moment(dateStart).add(90, 'days');
-		
-		let	dateDayremain = Math.max(0, dateEnd.diff(moment(), 'days') );
-		
-		let brushDates = Array.from([dateStart, dateDayremain, dateEnd]);
-		
-		dateFill(brushDates);
+	constructor (datechanged) {
+		this.date = moment(datechanged, "YYYY-MM-DD");
 	}
+
+	_dateStart() {
+		return this.date;
+	}
+
+	_dateEnd() {
+		return moment(this.date).add(90, 'days');
+	}
+	
+	_dateDayremain() {
+		return Math.max(0, this._dateEnd().diff(moment(), 'days') );
+	}
+	
+	get brushDates() {
+		return {datestart: this._dateStart(), dateremain: this._dateDayremain(), dateend: this._dateEnd()}
+	}
+	
 }
 
 
@@ -165,26 +176,32 @@ function dateFormat() {
 /*
 * Add dates to DOM
 * @function dateFill
-* @param {array} brushDates - Passes array of start, days remaining, end date
+* @param {array} datechanged - Passes array of start, days remaining, end date
 */
-function dateFill(brushDates) {
-	
+function dateFill(datechanged) {
+
+	if ( dateValid(datechanged) ) {
+		
+		let {datestart, dateremain, dateend} = new makeDates(datechanged).brushDates;
+		
 		// Vars
 		let domDaystart = document.querySelector('#dayStart');
 		let	domDayremain = document.querySelector('#dayRemaining');
 		let	domDayend = document.querySelector('#dayEnd');		
 		
 		// Date Start		
-		domDaystart.textContent = brushDates[0].format( dateFormat() );
-		domDaystart.setAttribute('datetime', `${dateUtc(brushDates[0])}`);
+		domDaystart.textContent = datestart.format('DD/MM/YYYY');
+		domDaystart.setAttribute('datetime', `${dateUtc(datestart)}`);
 
 		// Days Remain
-		domDayremain.textContent = `${ dayPlural(brushDates[1]) }`;
-		domDayremain.setAttribute('datetime', `P ${brushDates[1]} D`);
+		domDayremain.textContent = `${ dayPlural(dateremain) }`;
+		domDayremain.setAttribute('datetime', `P ${dateremain} D`);
 		
 		// Date End
-		domDayend.textContent = brushDates[2].format( dateFormat() );
-		domDayend.setAttribute('datetime', `${dateUtc(brushDates[2])}`);
+		domDayend.textContent = dateend.format('DD/MM/YYYY');
+		domDayend.setAttribute('datetime', `${dateUtc(dateend)}`);
+	
+	}
 		
 }
 
@@ -197,7 +214,7 @@ function dateFill(brushDates) {
 function brushDate() {
 	
 	if ( storedDate ) {
-		makeDates(storedDate);
+		dateFill(storedDate);
 	} else {
 		return;
 	}
@@ -221,7 +238,7 @@ function brushSwap() {
 		store.set('dateSwapped', moment().format("YYYY-MM-DD") );
 	}
 
-	makeDates(moment().format("YYYY-MM-DD"));
+	dateFill(moment().format("YYYY-MM-DD"));
 	
 	if (hasScheduling) {
 		try {
