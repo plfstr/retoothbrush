@@ -50,7 +50,7 @@ let localesCheck = (() => {
 */
 function langChange() {
 	if ( confirm('Browser language has changed. Reload with new language preferences?') ) {
-		console.warn('datechanged updated, reloaded?');
+		console.warn('brushDates updated, reloaded?');
 	}
 }
 
@@ -126,31 +126,20 @@ function dateUtc( dateIn ){
 }
 
 
-/*
-* @class makeDates
-*/
-class makeDates {
+function makeDates( dateBrushchange = false) {
 
-	constructor (datechanged) {
-		this.date = moment(datechanged, "YYYY-MM-DD");
+	if ( dateValid(dateBrushchange) ) {
+		
+		let	dateStart = moment(dateBrushchange, "YYYY-MM-DD");
+		
+		let	dateEnd = moment(dateStart).add(90, 'days');
+		
+		let	dateDayremain = Math.max(0, dateEnd.diff(moment(), 'days') );
+		
+		let brushDates = Array.from([dateStart, dateDayremain, dateEnd]);
+		
+		dateFill(brushDates);
 	}
-
-	_dateStart() {
-		return this.date;
-	}
-
-	_dateEnd() {
-		return moment(this.date).add(90, 'days');
-	}
-	
-	_dateDayremain() {
-		return Math.max(0, this._dateEnd().diff(moment(), 'days') );
-	}
-	
-	get brushDates() {
-		return {datestart: this._dateStart(), dateremain: this._dateDayremain(), dateend: this._dateEnd()}
-	}
-	
 }
 
 
@@ -176,32 +165,26 @@ function dateFormat() {
 /*
 * Add dates to DOM
 * @function dateFill
-* @param {array} datechanged - Passes array of start, days remaining, end date
+* @param {array} brushDates - Passes array of start, days remaining, end date
 */
-function dateFill(datechanged) {
-
-	if ( dateValid(datechanged) ) {
-		
-		let {datestart, dateremain, dateend} = new makeDates(datechanged).brushDates;
-		
+function dateFill(brushDates) {
+	
 		// Vars
 		let domDaystart = document.querySelector('#dayStart');
 		let	domDayremain = document.querySelector('#dayRemaining');
 		let	domDayend = document.querySelector('#dayEnd');		
 		
 		// Date Start		
-		domDaystart.textContent = datestart.format('DD/MM/YYYY');
-		domDaystart.setAttribute('datetime', `${dateUtc(datestart)}`);
+		domDaystart.textContent = brushDates[0].format( dateFormat() );
+		domDaystart.setAttribute('datetime', `${dateUtc(brushDates[0])}`);
 
 		// Days Remain
-		domDayremain.textContent = `${ dayPlural(dateremain) }`;
-		domDayremain.setAttribute('datetime', `P ${dateremain} D`);
+		domDayremain.textContent = `${ dayPlural(brushDates[1]) }`;
+		domDayremain.setAttribute('datetime', `P ${brushDates[1]} D`);
 		
 		// Date End
-		domDayend.textContent = dateend.format('DD/MM/YYYY');
-		domDayend.setAttribute('datetime', `${dateUtc(dateend)}`);
-	
-	}
+		domDayend.textContent = brushDates[2].format( dateFormat() );
+		domDayend.setAttribute('datetime', `${dateUtc(brushDates[2])}`);
 		
 }
 
@@ -214,7 +197,7 @@ function dateFill(datechanged) {
 function brushDate() {
 	
 	if ( storedDate ) {
-		dateFill(storedDate);
+		makeDates(storedDate);
 	} else {
 		return;
 	}
@@ -236,14 +219,13 @@ function brushSwap() {
 		if (storedDate) {
 			confirm('Brush Changed. Create new date?');
 		}
-		dateFill(datenow);
+		makeDates(datenow);
 		store.set('dateSwapped', datenow);
 	}
 	
 	if (hasScheduling) {
 		try {
 			createScheduledNotification('retoothbrush', 'ReToothbrush', moment().valueOf());
-			document.querySelector('i').textContent = moment().add(1, 'days').valueOf();
 		} catch(error) {
 			console.warn(error);
 			confirm('Notification failed to schedule. You will not receive a reminder');
@@ -315,13 +297,13 @@ if (hasScheduling) {
 
 	createScheduledNotification = async (tag, title, timestamp) => {
 		console.log({tag, title, timestamp});
-		let timedelay = 1000 * 60 * 60 * 24;
+		let scheduleDelay = moment().add(1, 'days').valueOf(); // 1 day
 		const registration = await navigator.serviceWorker.getRegistration();
 		console.log(registration);
 		registration.showNotification(title, {
 			tag: tag,
 			body: "Its time to swap your toothbrush!",
-			showTrigger: new TimestampTrigger(timestamp + timedelay)
+			showTrigger: new TimestampTrigger(timestamp + scheduleDelay)
 		});
 	};
 
