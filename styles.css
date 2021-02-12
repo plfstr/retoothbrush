@@ -114,6 +114,9 @@ time {
 	border-radius: 0em 1.25rem 0 1.25rem;
 	border-radius: var(--rtb-radius);
 	contain: style;
+	--rtb-stripe: var(--rtb-stripe);
+	--rtb-stripe-prev: var(--rtb-middle);
+	background-color: var(--rtb-stripe, #59eac3);
 }
 
 .timer__value--start {
@@ -141,13 +144,15 @@ time {
 	left: 0;
 	-webkit-transform: translate(0, -2.25rem);
 	transform: translate(0, -2.25rem);
+	background-color: inherit;
 }
 
 [class^='timer__value--']:after {
 	width: 2.5em;
 	left: 1px;
 	z-index: 52;
-	border-bottom-left-radius: 3rem;
+	border-bottom-left-radius: 3rem;	
+	background-color: var(--rtb-stripe-prev, transparent);
 }
 
 /*
@@ -157,34 +162,18 @@ time {
 * element - the color you expect
 */
 .timer__value--start {
-	background-color: #8cf9da;
-	background-color: var(--rtb-light);
-}
-.timer__value--start:after {
-	background-color: #2364ad;
-	background-color: var(--rtb-appbg);
+	--rtb-stripe: var(--rtb-light);
+	--rtb-stripe-prev: var(--rtb-appbg);
 }
 
 .timer__value--days {
-	background-color: #4DDEB6;
-	background-color: var(--rtb-middle);
-}
-.timer__value--days:after {
-	background-color: #8cf9da;
-	background-color: var(--rtb-light);
+	--rtb-stripe: var(--rtb-middle);
+	--rtb-stripe-prev: var(--rtb-light);
 }
 
 .timer__value--end {
-	background-color: #16c598;
-	background-color: var(--rtb-dark);
-}
-.timer__value--end:after {
-	background-color: #4DDEB6;
-	background-color: var(--rtb-middle);
-}
-
-[class^='timer__value--']:before {
-	background-color: inherit;
+	--rtb-stripe: var(--rtb-dark);
+	--rtb-stripe-prev: var(--rtb-middle);
 }
 
 
