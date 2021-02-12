@@ -221,7 +221,12 @@ footer {
 }
 
 /* Animated FadeIn Effect */
-/* .has-updated time, */
+@supports (animation-fill-mode: forwards) {
+	.has-stored time {
+		opacity: 0;
+	}
+}
+
 time {
 	animation: fadedates .5s ease-in .1s forwards;
 }

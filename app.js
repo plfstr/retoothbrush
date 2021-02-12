@@ -73,6 +73,11 @@ else {
 	var storedDate = false;
 }
 
+/**
+* Check stored data exists and hide stipes DOM for fade in effect
+*/
+if (storedDate) document.body.classList.add('has-stored');
+
 
 /*
 *	@function dateChecked - Checks date value passed is valid date
