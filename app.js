@@ -253,7 +253,7 @@ if (hasScheduling) {
 
 	createScheduledNotification = async (tag, title, timestamp) => {
 		console.log({tag, title, timestamp});
-		let timedelay = 1000 * 60 * 60 * 24;
+		let timedelay = 1000 * 60 * 60 * 24 * 90;
 		const registration = await navigator.serviceWorker.getRegistration();
 		console.log(registration);
 		registration.showNotification(title, {
