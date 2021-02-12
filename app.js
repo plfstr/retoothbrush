@@ -25,41 +25,6 @@ if ( typeof store !== 'undefined' && !store.enabled ) {
 if ( window.isSecureContext === false ) {
 	userMsg('Local storage is disabled by your browser in non-secure(HTTP) contexts. Check page URL is secure with ‘HTTPS’ (padlock symbol).');
 }
-	
-/*
-* Set Moment locale language...
-*/
-var browLang = (() => {
-	return window.navigator.languages || window.navigator.language;
-})();
-
-
-// Test browLang array for 'en', 'en-GB', 'en-US'...
-let localesCheck = (() => {
-	if (browLang.indexOf('en') === 0 || browLang.indexOf('en-GB') === 0 || browLang.indexOf('en-US') === 0) {
-		return true;
-	} else { 
-		return false;
-	};
-})();
-
-
-/*
-* @function langChange - Browser language change
-* @callback {brushDate}
-*/
-function langChange() {
-	if ( confirm('Browser language has changed. Reload with new language preferences?') ) {
-		console.warn('datechanged updated, reloaded?');
-	}
-}
-
-/*
-* Watch language change - maybe call display function again?
-* @listener
-* @callback {langChage}
-*/
-window.onlanguagechange = langChange;
 
 
 /* 
