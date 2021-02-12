@@ -57,22 +57,14 @@ function dateValid( dateChecked ) {
 function dayPlural(daysRemaining) {
 	
 	if ( Number.isInteger(daysRemaining) ) {
-		
-		if ( window.Intl.hasOwnProperty('RelativeTimeFormat') ) {
-
-			return new Intl.RelativeTimeFormat( browLang ).format(daysRemaining, 'day');
-			
+	
+		if (daysRemaining !== 1) {
+			return daysRemaining + ' ' + 'days';
 		} else {
-			
-			if (daysRemaining !== 1) {
-				return daysRemaining + ' ' + 'days';
-			} else {
-				return daysRemaining + ' ' + 'day';
-			}
+			return daysRemaining + ' ' + 'day';
 		}
 
-	}	
-
+	}
 }
 
 
@@ -116,25 +108,6 @@ class makeDates {
 		return {datestart: this._dateStart(), dateremain: this._dateDayremain(), dateend: this._dateEnd()}
 	}
 	
-}
-
-
-/*
-* Check en-US format being used and reverse date...
-* Update footer note about date format....
-* @function dateFormat
-*/
-function dateFormat() {
-	
-	let domDateformat = document.querySelector('i');
-	
-	if ( browLang.indexOf('en-US') === 0 ) {
-		domDateformat.textContent = 'Date format MM/DD/YYYY';
-		return 'MM/DD/YYYY';
-	} else {
-		domDateformat.textContent = 'Date format MM/DD/YYYY';
-		return 'DD/MM/YYYY';
-	}
 }
 
 
