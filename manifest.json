@@ -1,6 +1,6 @@
 {
-  "name": "reToothbrush - When did I last change my toothbrush?",
-  "short_name" : "reToothbrush",
+  "name": "reToothbrush",
+  "short_name" : "reToothbrsh",
   "icons": [
     {
       "src": "webclip-512x512-maskable.png",
