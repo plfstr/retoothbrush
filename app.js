@@ -1,8 +1,9 @@
+// @ts-check
 'use strict';
 
-/*
+/**
 * @function userMsg - Provides feedback to user
-* @params {string} msg - User message
+* @params {string} [msg] - User message
 */
 function userMsg(msg = "Sorry, your browser lacks the features required by reToothbrush") {
 	alert(msg);
@@ -27,7 +28,7 @@ if ( window.isSecureContext === false ) {
 }
 
 
-/* 
+/** 
 * @var storedDate - checks typeof to keep Chrome happy, gets stored date
 * @returns {string} - YYYY-MM-DD ???
 */
@@ -39,9 +40,9 @@ else {
 }
 
 
-/*
+/**
 *	@function dateChecked - Checks date value passed is valid date
-*	@param {string} dateChecked
+*	@param {Date} dateChecked
 *	@return {boolean}
 */
 function dateValid( dateChecked ) {
@@ -49,7 +50,7 @@ function dateValid( dateChecked ) {
 }
 
 
-/*
+/**
 * @function - Days Remaining Plural String Function. New Intl.relativeTime API method!!! Use Polyfill (one exist yet??)
 * @params {number} daysRemaining
 * @return {string} - XX day(s)
@@ -69,9 +70,9 @@ function dayPlural(daysRemaining) {
 
 
 // Make UTC Version to add as datetime attribute. SEEMS TO BE DAY OUT THOUGH!!!!!111
-/*
+/**
 *	@function dateUtc - Make UTC Version to add as datetime attribute
-*	@param {date} dateIn
+*	@param {Date} dateIn
 *	@return {boolean}
 */
 function dateUtc( dateIn ){
@@ -83,7 +84,7 @@ function dateUtc( dateIn ){
 }
 
 
-/*
+/**
 * @class makeDates
 */
 class makeDates {
@@ -103,7 +104,7 @@ class makeDates {
 	_dateDayremain() {
 		return Math.max(0, this._dateEnd().diff(moment(), 'days') );
 	}
-	
+
 	get brushDates() {
 		return {datestart: this._dateStart(), dateremain: this._dateDayremain(), dateend: this._dateEnd()}
 	}
@@ -111,10 +112,10 @@ class makeDates {
 }
 
 
-/*
+/**
 * Add dates to DOM
 * @function dateFill
-* @param {array} datechanged - Passes array of start, days remaining, end date
+* @param {Date} datechanged
 */
 function dateFill(datechanged) {
 
@@ -144,10 +145,10 @@ function dateFill(datechanged) {
 }
 
 
-/*
+/**
 * Get stored date
 * @function brushDate
-* @callback {makeDates}
+* @callback {dateFill}
 */
 function brushDate() {
 	
@@ -160,10 +161,9 @@ function brushDate() {
 }
 
 	
-/*
+/**
 * @function brushSwap - Save to LocalStorage
-* @param {string} dateBrushchange - Passed date, checks it is dateValid(), then store date in localStorage
-* @callback makeDates
+* @callback dateFill
 */
 function brushSwap() {
 
