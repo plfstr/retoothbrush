@@ -3,7 +3,7 @@
 
 /**
 * @function userMsg - Provides feedback to user
-* @params {string} [msg] - User message
+* @param {string} [msg] - User message
 */
 function userMsg(msg = "Sorry, your browser lacks the features required by reToothbrush") {
 	alert(msg);
@@ -52,7 +52,7 @@ function dateValid( dateChecked ) {
 
 /**
 * @function - Days Remaining Plural String Function. New Intl.relativeTime API method!!! Use Polyfill (one exist yet??)
-* @params {number} daysRemaining
+* @param {number} daysRemaining
 * @return {string} - XX day(s)
 */
 function dayPlural(daysRemaining) {
