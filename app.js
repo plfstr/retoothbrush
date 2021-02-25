@@ -89,6 +89,9 @@ function dateUtc( dateIn ){
 */
 class makeDates {
 
+	/** 
+	* @param {Date} datechanged 
+	*/
 	constructor (datechanged) {
 		this.date = moment(datechanged, "YYYY-MM-DD");
 	}
@@ -110,7 +113,6 @@ class makeDates {
 	}
 	
 }
-
 
 /**
 * Add dates to DOM
