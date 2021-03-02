@@ -20,6 +20,9 @@
       "description": "Required to schedule notifications"
     }
   },
+  "messages": [
+    { "alarm": "index.html" }
+  ],
   "csp" : "default-src 'none'; script-src 'self'; style-src 'self'",
   "type": "web",
   "categories": [
