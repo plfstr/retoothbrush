@@ -188,6 +188,8 @@ function brushSwap() {
 			console.warn(error);
 			confirm('Notification failed to schedule. You will not receive a reminder');
 		}
+	} else if (navigator.mozAlarms) {
+		kaiAlarm(moment().valueOf());
 	}
 
 	// Trigger fade-in effect
@@ -273,4 +275,12 @@ if (hasScheduling) {
 		});
 		notifications.forEach((notification) => notification.close());
 	};
+}
+
+// Kai OS Alarm API
+if (navigator.mozAlarms) {
+	let kaiAlarm = (alarmdate) => {
+		let alarmdata = {rtb: alarmdate};
+		navigator.mozAlarms.add(alarmdate, 'ignoreTimezone', alarmdata);
+	}
 }
